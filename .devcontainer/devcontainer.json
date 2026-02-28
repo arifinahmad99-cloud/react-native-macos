@@ -1,0 +1,65 @@
+{
+  "name": "React Native (macOS)",
+  // Use a pre-built image with Node.js and common tools
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
+  // Or build from a Dockerfile for more control (uncomment the lines below)
+  // "build": {
+  //   "dockerfile": "Dockerfile"
+  // },
+
+  // Add additional features (CLI tools)
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17",
+      "installMaven": false,
+      "installGradle": true
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/ruby:1": {
+      "version": "3.2"
+    }
+  },
+
+  // Configure environment variables (optional)
+  "containerEnv": {
+    "ANDROID_HOME": "/usr/local/android-sdk",
+    "JAVA_HOME": "/usr/local/sdkman/candidates/java/current"
+  },
+
+  // Run commands after the container is created
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+
+  // Ports to forward (Metro bundler uses 8081)
+  "forwardPorts": [8081, 19000, 19001, 19002, 8081],
+  "portsAttributes": {
+    "8081": {
+      "label": "Metro Bundler",
+      "onAutoForward": "notify"
+    }
+  },
+
+  // Install VS Code extensions for React Native
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "msjsdiag.vscode-react-native",
+        "msjsdiag.vscode-react-native-tools",
+        "dsznajder.es7-react-js-snippets",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "streetsidesoftware.code-spell-checker",
+        "vscjava.vscode-java-pack",
+        "redhat.vscode-xml",
+        "vadimcn.vscode-lldb"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "react-native-tools.showDevMenuOnStartup": true
+      }
+    }
+  },
+
+  // Use a non-root user to avoid permission issues
+  "remoteUser": "node"
+}
