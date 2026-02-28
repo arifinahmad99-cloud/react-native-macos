@@ -1,0 +1,28 @@
+# Start from the official Node.js 18 image (Debian-based)
+FROM node:18
+
+# Install Java 17 (OpenJDK) and other system dependencies
+RUN apt-get update && apt-get install -y \
+    openjdk-17-jdk \
+    wget \
+    unzip \
+    git \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set JAVA_HOME environment variable
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH=$JAVA_HOME/bin:$PATH
+
+# Install React Native CLI globally (optional)
+RUN npm install -g react-native-cli
+
+# Install CocoaPods (requires Ruby)
+RUN gem install cocoapods
+
+# Install Watchman (optional but recommended)
+RUN apt-get update && apt-get install -y watchman
+
+# Set up a non-root user (optional but good practice)
+RUN useradd -m -s /bin/bash node
+USER node
